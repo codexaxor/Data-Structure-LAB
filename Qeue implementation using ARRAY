@@ -1,0 +1,116 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+#define S 100000
+
+int test[S];
+int ch,front=0,rear=0,i,j=1,x,n,find_value;
+
+void push()
+{
+    if(rear == x)
+        printf("\n Queue is Full");
+    else
+    {
+        printf("\n Enter no %d:",j++);
+        scanf("%d",&test[rear++]);
+    }
+}
+
+void pop()
+{
+    if(front==rear)
+    {
+        printf("\n Queue is empty");
+    }
+    else
+    {
+        
+        printf("\n Popped Element is %d",test[front++]);
+        x++;
+    }
+}
+
+void display()
+{
+    
+    if(front==rear)
+        printf("\n Queue is Empty");
+    else
+    {
+        printf("\nThe Queue Elements are:\n ");
+        for(i=front; i<rear; i++)
+        {
+            printf("\n%d",test[i]);
+        }
+    }
+}
+
+void search_value()
+{
+    if(front==rear)
+        printf("\n Nothing to show in QUEUE");
+    else
+    {
+        printf("\nEnter a value to find :  ");
+        scanf("%d",&find_value);
+        
+        for(i=front; i<rear; i++)
+        {
+            if ( find_value == test[i] ) {
+                printf("\n Element found !!\n");
+                break;
+            }
+        }
+        if (i>=rear)
+        {
+            printf("Element not found!\n");
+        }
+    }
+}
+
+int main()
+{
+    
+    printf("\n Enter the size of QUEUE [MAX=100000] : ");
+    scanf("%d",&n);   
+    x=n;
+    printf("\n Implementation of Queue using Array  ");
+    printf("\n*******************************************\n");
+    printf("\n1.PUSH \n2.POP \n3.DIPLAY \n4.SEARCH \n5.EXIT\n");
+    printf("\n*******************************************\n");
+    
+    
+    do{
+        printf("\nEnter the Choice: ");
+        scanf("%d",&ch);
+
+        switch(ch)
+        {
+            case 1:
+                push();
+                break;
+            case 2:
+                pop();
+                break;
+            case 3:
+                display();
+                break;
+            case 4:
+                search_value();
+                break;
+            case 5:
+                printf("\n\t EXIT \n");
+                break;
+                
+                //exit(0);
+            default:
+                printf("Wrong Choice!");
+                
+        }
+    } while (ch!=5);
+    
+    return 0;
+}
+
