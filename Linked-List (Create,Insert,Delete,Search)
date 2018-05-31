@@ -1,0 +1,190 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+
+struct linked_list
+{
+    int number;
+    struct linked_list* next;
+};
+
+typedef struct linked_list node;
+node *head=NULL, *last=NULL;
+
+
+void insert(int value)
+{
+    node *temp_node;
+    temp_node = (node *) malloc(sizeof(node));
+
+    temp_node->number=value;
+    temp_node->next=NULL;
+
+    if(head==NULL)
+    {
+        head=temp_node;
+        last=temp_node;
+    }
+    else
+    {
+        last->next=temp_node;
+        last=temp_node;
+    }
+
+}
+
+void create_linked_list()
+{
+    int val;
+
+    while(1)
+    {
+        printf("Input a number. (Enter -1 to exit)\n");
+
+        scanf("%d", &val);
+
+        if(val==-1)
+            break;
+
+        insert(val);
+    }
+
+}
+
+void delete_item(int value)
+{
+    node *myNode = head, *previous=NULL;
+    int flag = 0;
+
+    while(myNode!=NULL)
+    {
+        if(myNode->number==value)
+        {
+            if(previous==NULL)
+                head = myNode->next;
+            else
+                previous->next = myNode->next;
+
+            printf("%d is deleted from list\n", value);
+
+            flag = 1;
+            break;
+        }
+
+        previous = myNode;
+        myNode = myNode->next;
+    }
+
+    if(flag==0)
+        printf("Key not found!\n");
+}
+
+void search_item(int value)
+{
+    node *searchNode = head;
+    int flag = 0;
+
+    while(searchNode!=NULL)
+    {
+        if(searchNode->number==value)
+        {
+            printf("%d is present in this list. Memory address is %d\n", value, searchNode);
+            flag = 1;
+            break;
+        }
+        else
+            searchNode = searchNode->next;
+    }
+
+    if(flag==0)
+        printf("Item not found\n");
+}
+
+void print_linked_list()
+{
+    printf("\nYour full linked list is\n");
+
+    node *myList;
+    myList = head;
+
+    while(myList!=NULL)
+    {
+        printf("%d ", myList->number);
+
+        myList = myList->next;
+    }
+    printf("\n");
+    
+}
+
+
+int main()
+{
+    int key, value,n;
+
+    while(1)
+    {
+    	printf("***********************\n");
+    	printf("\tLinked List\n");
+      printf("***********************\n");
+    	printf("1. Create Linked List\n");
+    	printf("2. Insert a value\n");
+    	printf("3. Delete a value\n");
+    	printf("4. Search a value\n");
+    	printf("5. Exit\n");
+    	printf("***********************\n");
+    	
+      scanf("%d",&n);
+
+    	switch(n)
+    	{
+    		case 1:
+    			
+			    printf("\nCreate Linked List\n");
+			    create_linked_list();
+			    print_linked_list();
+			    break;
+
+    		case 2:
+    		
+			    printf("\nInsert a value: ");
+			    scanf("%d", &value);
+			    insert(value);
+			    print_linked_list();
+			    break;
+    		
+
+    		case 3:
+
+			    printf("\nEnter a value, which you want to delete from list\n");
+			    scanf("%d", &value);
+			    delete_item(value);
+			    print_linked_list();
+			    break;
+
+    		case 4:
+        
+			    printf("\nEnter an item to search it from List\n");
+			    scanf("%d", &value);
+			    search_item(value);
+			    break;
+
+    		case 5:
+    		
+    			exit(0);
+    			break;
+
+    		default : 
+    			printf("Enter a valid Choice!!\n");
+
+    	}
+    }
+    return 0;
+}
+
+
+
+
+
+
+
