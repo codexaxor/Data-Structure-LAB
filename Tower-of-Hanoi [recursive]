@@ -1,0 +1,24 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int Tower_Hanoi(int disk, char from, char dest, char aux)
+
+{
+    if(disk==1) printf("%c -> %c\n",from,dest);
+    else
+    {
+        Tower_Hanoi(disk-1, from, aux, dest);
+        printf("%c -> %c\n",from,dest);
+        Tower_Hanoi(disk-1, aux, dest, from);
+    }
+}
+
+int main()
+{
+    int disk;
+    scanf("%d",&disk);
+    Tower_Hanoi(disk,'S','D','A');
+
+    return 0;
+}
