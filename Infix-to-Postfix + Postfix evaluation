@@ -1,0 +1,130 @@
+#include <stdio.h>
+#include <iostream>
+#include <stdlib.h>
+#include <algorithm>
+#include <cstring>
+#include <string>
+#include <stack>
+#include <cctype>
+#include <math.h>
+#include <cmath>
+
+using namespace std;
+
+void PostfixEvaluate(string s9);
+
+int precision(char c) // checking expression weight
+{
+    if(c=='^')
+        return 3;
+    else if (c=='*' || c=='/')
+        return 2;
+    else if (c=='+' || c=='-')
+        return 1;
+    else
+        return -1;
+}
+
+/* Fucntion to convert Infix to Postfix */
+
+void InfixToPostfix(string s)
+{
+    stack<char>sk;
+    string s9;
+    int l = s.length();
+    sk.push('$');
+    
+    for (int i=0; i<l; i++) {
+        
+        // scanning for operand, if found push it to STRING
+        if ( (s[i] >= 'a' && s[i] <= 'z') || (s[i] >= 'A' && s[i]<='Z') || (s[i]>='0' || s[i]<='9') ) {
+            s9+=s[i];
+        }
+        else if (s[i]=='(')
+            sk.push('(');  // pushing opening brace to stack
+        else if (s[i]==')')
+        {
+            while(sk.top()!='$' && sk.top() != '(')
+            {
+                char c= sk.top();
+                sk.pop();
+                s9+=c;
+            }
+            if (sk.top()=='(') {
+                sk.pop();
+            }
+            
+        }
+        
+        else{
+            while (sk.top()!= '$' && precision(s[i]) <= precision(sk.top()) ) {
+                char c=sk.top();
+                sk.pop();
+                s9+=c;
+            }
+            sk.push(s[i]);
+        }
+    }
+    
+    // pop remaining all elements
+    while (sk.top()!='$') {
+        char c= sk.top();
+        sk.pop();
+        s9+=c;
+    }
+    
+    cout<<s9<<endl;
+    
+    PostfixEvaluate(s9);
+}
+
+int PerformAction(int x, int y, char z)
+{
+    
+    if(z == '+')
+        return x+y;
+    else if(z == '-')
+        return x-y;
+    else if(z == '/')
+        return x/y;
+    else if(z == '*')
+        return x*y;
+    else if(z == '^')
+        return pow(x, y);
+    return 0;
+}
+
+void PostfixEvaluate(string s9)
+{
+    stack <int> jk;
+    int l = s9.length();
+    for (int i=0; i<l; i++) {
+        if (isdigit(s9[i])) {
+            jk.push((s9[i]-'0'));  // converted string from int
+        
+        }
+        else
+        {
+            char Operator = s9[i];
+            int op2 = jk.top();
+            jk.pop();
+            int op1 = jk.top();
+            jk.pop();
+            int value = PerformAction(op1, op2, Operator);
+            jk.push(value); // performed value again input
+        }
+    }
+   // return jk.top(); // result return
+    cout<<jk.top()<<endl;  // result printed
+}
+
+int main()
+{
+   // string s8 = "a+b*(c^d-e)^(f+g*h)-i";
+
+    string s8;
+    cin>>s8;
+    InfixToPostfix(s8);
+    
+    return 0;
+}
