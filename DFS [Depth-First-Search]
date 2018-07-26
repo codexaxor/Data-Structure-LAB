@@ -1,0 +1,76 @@
+// dfs
+
+
+#include <stdio.h>
+#include <iostream>
+#include <stdlib.h>
+#include <algorithm>
+#include <cstring>
+#include <string>
+#include <stack>
+#include <cctype>
+#include <math.h>
+#include <cmath>
+
+using namespace std;
+
+#define WHITE 1
+#define GRAY 2
+#define BLACK 3
+
+int adj [100][100];
+int color [100];
+
+int node, edge;
+
+
+void dfsVisit(int x)
+{
+    color[x] = GRAY;
+    
+    // working process
+    // travarse node for checking neighbours
+    for (int i=0; i<node; i++) {
+        if (adj[x][i] == 1) {
+            if (color[i] == WHITE) {
+                dfsVisit(i);
+            }
+        }
+    }
+    
+    color[node] = BLACK;
+    
+    cout<<x<<"->";
+}
+
+void DFS()
+{
+    //initillay all value white
+    
+    for (int i=0; i<node; i++) {
+        color[i] = WHITE;
+    }
+    
+    // visit node while it is white
+    for (int i=0; i<node; ++i) {
+        if (color[i] == WHITE) {
+            dfsVisit(i);
+        }
+    }
+}
+
+int main()
+
+{
+   // freopen("input.txt", "r", stdin);
+    scanf("%d %d",&node, &edge); // node , edge;
+    
+    int n1,n2;
+    for (int i=0; i<edge; i++) {
+        scanf("%d %d",&n1,&n2);
+        adj[n1][n2] = 1;
+        adj[n2][n1] = 1;
+    }
+    
+    DFS();
+}
