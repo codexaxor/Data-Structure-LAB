@@ -1,0 +1,84 @@
+#include <stdio.h>
+#include <iostream>
+#include <stdlib.h>
+#include <algorithm>
+#include <cstring>
+#include <string>
+#include <stack>
+#include <cctype>
+#include <math.h>
+#include <cmath>
+#include <queue>
+
+using namespace std;
+
+#define WHITE 1
+#define GRAY 2
+#define BLACK 3
+
+int adj [100][100];
+int color [100];
+int parent[100];
+int dis[100];
+
+int node, edge;
+
+void BFS (int start_node)
+{
+    for (int i=0; i<node; i++) {
+        color[i] = WHITE;
+        dis[i] = INT_MIN; // minimum value
+        parent[i] = -1; // initially have no parent
+    }
+    
+    dis[start_node] = 0;
+    parent[start_node] = -1;
+    
+    queue<int>q;
+    q.push(start_node);
+    
+    while (!q.empty()) {
+        int x;
+        
+        x = q.front();
+        
+        q.pop();
+        
+        color[x] = GRAY;
+        
+        cout<<x<<"->";  // print x value
+        
+        
+        // working process here starts
+        
+        for (int i=0; i<node; ++i) {
+            if (adj[x][i] == 1) { // checkneighbour of x
+                if (color[i] == WHITE) { // neighbour of x = i
+                    dis[i] = dis[x]+1;
+                    parent[i] = x;
+                    q.push(i);
+                    
+                }
+            }
+        }
+        
+        color[x] = BLACK;
+    }
+}
+
+int main()
+
+{
+    //freopen("input.txt", "r", stdin);
+    scanf("%d %d",&node, &edge); // node , edge;
+    
+    int n1,n2;
+    for (int i=0; i<edge; i++) {
+        scanf("%d %d",&n1,&n2);
+        adj[n1][n2] = 1;
+        adj[n2][n1] = 1;
+    }
+    
+    BFS(0); //input starting node
+    
+}
