@@ -1,0 +1,52 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+stack <string> st;
+string ar ;
+
+void postfix_to_infix()
+{
+    for(int i=0;ar[i];i++)
+    {
+        if( (ar[i]>='a' && ar[i] <='z') || (ar[i]>='A' && ar[i] <='Z') || (ar[i]>='0' && ar[i] <='9') )
+        {
+          string temp(1,ar[i]);
+
+          st.push(temp);
+        }
+
+        else
+            {
+                string s1 ;
+                string s2 ;
+
+                s1=st.top();
+                st.pop();
+                s2=st.top();
+                st.pop();
+                st.push("( " + s2 + ar[i] +
+                   s1 + " )");
+
+            }
+    }
+
+}
+
+
+int main()
+{
+    cout<<"Enter postfix equation : ";
+
+    cin>>ar;
+
+    postfix_to_infix();
+
+    cout<<endl<<endl;
+    cout<<"The postfix equation is:   "<<ar;
+    cout<<endl<<endl;
+
+    cout<<"The infix equation is  :   "<<st.top();
+    cout<<endl<<endl;
+    return 0;
+}
+
