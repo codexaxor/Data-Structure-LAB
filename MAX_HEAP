@@ -1,0 +1,84 @@
+#include<bits/stdc++.h>
+
+using namespace std;
+
+int LEFT(int i)
+{
+    return 2*i;
+}
+
+int RIGHT(int i)
+{
+    return (2*i+1);
+}
+
+
+void MAX_HEAPIFY(int Array[], int Heap_Size, int i)
+{
+    int Largest;
+    int L = LEFT(i);
+    int R = RIGHT(i);
+
+    if(L<=Heap_Size && Array[L]>Array[i])
+    {
+        Largest=L;
+    }
+
+    else
+        Largest = i;
+
+
+    if(R <= Heap_Size && Array[R]>Array[Largest] )
+    {
+        Largest = R;
+    }
+
+    if(Largest != i)
+    {
+        swap(Array[i], Array[Largest]);
+        MAX_HEAPIFY(Array, Heap_Size, Largest);
+    }
+
+
+}
+
+
+void BUILD_MAX_HEAP(int Array[], int Heap_Size)
+{
+
+
+    for(int i=(Heap_Size/2); i>=1; i--)
+    {
+        MAX_HEAPIFY(Array, Heap_Size,i);
+    }
+
+
+}
+
+
+void HEAP_SORT(int Array[], int Heap_Size)
+{
+    BUILD_MAX_HEAP(Array, Heap_Size);
+    for(int i=Heap_Size; i>=2;i--)
+    {
+        swap(Array[1],Array[i]);
+        Heap_Size=Heap_Size-1;
+
+        MAX_HEAPIFY(Array, Heap_Size,1);
+    }
+}
+
+int main(void)
+{
+    int n;
+
+    int Array[] = {5, 1, -41, 2, 3};
+    n = sizeof(Array)/sizeof(*Array);
+    HEAP_SORT(Array,n);
+
+    for(int i=1; i<=n; i++)
+    {
+        cout<<Array[i]<<" ";
+    }
+}
+
