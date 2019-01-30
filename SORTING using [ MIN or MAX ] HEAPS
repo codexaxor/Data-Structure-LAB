@@ -1,0 +1,57 @@
+/// using min_heap decending & ascending
+
+int acndng[1000];
+
+void HEAPIFY(int kr[], int n, int i){
+    int sml = i;
+    int l = 2*i+1;
+    int r = 2*i+2;
+    
+    if (l < n && kr[l] < kr[sml] ) {
+        sml = l;
+    }
+    if (r < n && kr[r] < kr[sml] )
+        sml = r;
+    
+    if (sml != i) {
+        swap(kr[i],kr[sml]);
+        HEAPIFY(kr,n,sml);
+    }
+}
+
+void MIN_HEAP_BUILDER(int kr[], int n){
+    
+    for (int i = n/2 - 1; i>=0; i--) {
+        HEAPIFY(kr,n,i);
+    }
+}
+void MIN_HEAP(int kr[], int n){
+    
+    MIN_HEAP_BUILDER(kr,n);
+    
+    for (int i = n-1, k=0; i>=0; i--, k++) {  /// condition to change
+        swap(kr[0],kr[i]);
+        acndng[k] = kr[i]; /// here
+        n-=1;
+        HEAPIFY(kr,n,0);
+    }
+}
+
+int main(){
+    int kr[] = { 99, 45, 1, -5, -7};
+    int n = sizeof(kr)/sizeof(*kr);
+    MIN_HEAP(kr,n);
+    
+    ///descending
+    for (int i=0; i<n; i++) {
+        cout<<kr[i]<<" ";
+    }
+    cout<<endl;
+    
+    ///ascending
+    for (int i=0; i<n; i++) {
+        cout<<acndng[i]<<" ";
+    }
+    cout<<endl;
+    
+}
