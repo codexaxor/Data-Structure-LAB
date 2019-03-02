@@ -54,7 +54,7 @@ void KrushKal(int Node){
             MST+=E[i].w;
         }
     }
-    cout<<totalCost-MST<<endl;
+    cout<<MST<<endl;
 }
 
 int main(){
