@@ -7,6 +7,8 @@ int bin[1000];
 int limit;
 int f;
 
+/// bianry search
+
 void Input()
 {
     printf("\nInput array Size : ");
