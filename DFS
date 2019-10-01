@@ -5,6 +5,8 @@ int color[1000];
 vector<int>v[1000];
 queue<int>q;
 
+// show in github
+
 void DFS(int root){
     
     color[root] = 1;
